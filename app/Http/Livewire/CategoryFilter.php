@@ -10,11 +10,11 @@ class CategoryFilter extends Component
 
     public $category;
 
-    public $search = '';
-
     public function render()
     {
-        $products = $this->category->products()->where('status', 2)->where('description', 'like', '%' . $this->search . '%')->get();
+        $products = $this->category->products()->where('status', 2)->get();
+
+        //where('description', 'like', '%' . $this->search . '%')->
 
         return view('livewire.category-filter', compact('products'));
     }

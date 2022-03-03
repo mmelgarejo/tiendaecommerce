@@ -1,6 +1,31 @@
 <div>
-    <input wire:model="search" type="text" placeholder="Buscar Productos..."/>
-    <div class="grid grid-cols-4 gap-4 mb-4 py-2">
+    <div class="bg-white rounded-lg shadow-lg mb-6">
+        <div class="px-6 py-2 flex justify-between items-center">
+            <h1 class="font-semibold text-gray-700 uppercase">{{$category->name}}</h1>
+            
+
+            <div class="hidden md:block grid grid-cols-2 border border-gray-200 divide-x divide-gray-200 text-gray-500">
+                <i class="fas fa-border-all p-3 cursor-pointer)"></i>
+                <i class="fas fa-th-list p-3 cursor-pointer"></i>
+            </div>
+        </div>
+
+        <div class="px-6 py-2 justify-between">
+            <ul>
+                @foreach ($category->subcategories as $subcategory)
+                    <li class="py-2 text-sm">
+                        <a href="">
+                            {{$subcategory->name}}
+                        </a>
+                    </li>
+                @endforeach
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        
         @foreach ($products as $product)
             <div class="text-center bg-white rounded-lg shadow mb-4">
                 <article>
