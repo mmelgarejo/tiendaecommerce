@@ -13,7 +13,7 @@
 
                             <div class="py-4 px-6">
                                 <h1 class="text-lg font-semibold ">
-                                    <a href="">
+                                    <a href="{{route('product.show', $product)}}">
                                         {{Str::limit($product->name, 20)}}
                                     </a>
                                 </h1>

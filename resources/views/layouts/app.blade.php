@@ -12,14 +12,35 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+        <!-- Fontawesome -->
         <link rel="stylesheet" href="{{asset('vendor/fontawesome-free/css/all.min.css')}}">
+
+        <!-- Glider -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.6.6/glider.min.css" integrity="sha512-YM6sLXVMZqkCspZoZeIPGXrhD9wxlxEF7MzniuvegURqrTGV2xTfqq1v9FJnczH+5OGFl5V78RgHZGaK34ylVg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <!-- FlexSilder -->
+
+        <link rel="stylesheet" href="{{asset('vendor/FlexSlider/flexslider.css')}}">
+
+
 
         @livewireStyles
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
+
+        {{-- Glider --}}
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.6.6/glider.min.js" integrity="sha512-RidPlemZ+Xtdq62dXb81kYFycgFQJ71CKg+YbKw+deBWB0TLIqCraOn6k0CWDH2rGvE1a8ruqMB+4E4OLVJ7Dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        
+        {{-- Jquery --}}
+        
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+        {{-- FlexSlider --}}
+
+        <script src="{{asset('vendor/FlexSlider/jquery.flexslider-min.js')}}"></script>
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />

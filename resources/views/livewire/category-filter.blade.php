@@ -9,37 +9,62 @@
                 <i class="fas fa-th-list p-3 cursor-pointer"></i>
             </div>
         </div>
-
-        <div class="px-6 py-2 justify-between">
-            <ul>
-                @foreach ($category->subcategories as $subcategory)
-                    <li class="py-2 text-sm">
-                        <a href="">
-                            {{$subcategory->name}}
-                        </a>
-                    </li>
-                @endforeach
-
-            </ul>
-        </div>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-        
-        @foreach ($products as $product)
-            <div class="text-center bg-white rounded-lg shadow mb-4">
-                <article>
-                    <figure>
-                        <img src="{{Storage::url($product->images->first()->url)}}" alt="" class="h-80 w-full object-cover object-center">
-                    </figure>
-                    <h1 class="text-lg font-semibold ">
-                        <a href="">
-                            {{Str::limit($product->name, 20)}}
+        <aside>
+
+            <h2 class="font-semibold text-center mb-2">Subcategorías</h2>
+            <ul class="divide-y divide-gray-200">
+                @foreach ($category->subcategories as $subcategory)
+                    <li class="py-2 text-sm">
+                        <a class="cursor-pointer hover:text-orange-500 capitalize {{ $subcategoria == $subcategory->name ? 'text-orange-500 font-semibold' : ''}}"
+                            wire:click="$set('subcategoria', '{{$subcategory->name}}')"
+                        >{{$subcategory->name}}
                         </a>
-                    </h1>
-                    <p class="font-bold text-gray-700">US$ {{$product->price}}</p>
-                </article>
-            </div>
-        @endforeach
+                    </li>
+                @endforeach
+            </ul>
+
+            <h2 class="font-semibold text-center mt-4 mb-2">Marcas</h2>
+            <ul class="divide-y divide-gray-200">
+                @foreach ($category->brands as $brand)
+                    <li class="py-2 text-sm">
+                        <a class="cursor-pointer hover:text-orange-500 capitalize {{ $marca == $brand->name ? 'text-orange-500 font-semibold' : ''}}"
+                            wire:click="$set('marca', '{{$brand->name}}')"
+                        >
+                            {{$brand->name}}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+
+            <x-jet-button class="mt-4" wire:click="limpiar">
+                Eliminar Filtros
+            </x-jet-button>
+        </aside>
+        <div class="md:col-span-2 lg:col-span-4">
+            <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                @foreach ($products as $product)
+                    <li class="bg-white rounded-lg shadow">
+                        <article>
+                            <figure>
+                                <img class="h-48 w-full object-cover object-center" src="{{ Storage::url($product->images->first()->url) }}" alt="">
+                            </figure>
+
+                            <div class="py-4 px-6">
+                                    <h1 class="text-lg font-semibold">
+                                        <a href="{{route('product.show', $product)}}">
+                                            {{Str::limit($product->name, 20)}}
+                                        </a>
+                                    </h1>
+
+                                    <p class="font-bold text-trueGray-700">US$ {{$product->price}}</p>
+                            </div>
+                        </article>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
     </div> 
 </div>
