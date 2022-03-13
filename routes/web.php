@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WelcomeController;
@@ -25,3 +26,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::get('categories/{category}', [CategoryController::class, 'show'])->name('category.show');
 
 Route::get('products/{product}', [ProductController::class, 'show'])->name('product.show');
+
+Route::get('admin', [AdminController::class, 'index'])->name('admin.index');
+
+Route::get('admin/users/{user}', [AdminController::class, 'editUsers'])->name('user.edit');
