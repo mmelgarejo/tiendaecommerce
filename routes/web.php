@@ -27,6 +27,21 @@ Route::get('categories/{category}', [CategoryController::class, 'show'])->name('
 
 Route::get('products/{product}', [ProductController::class, 'show'])->name('product.show');
 
-Route::get('admin', [AdminController::class, 'index'])->name('admin.index');
+Route::get('admin', [AdminController::class, 'index'])->middleware('can:admin.home')->name('admin.index');
 
-Route::get('admin/users/{user}', [AdminController::class, 'editUsers'])->name('user.edit');
+// Rutas de Users
+
+Route::get('admin/users', [AdminController::class, 'listUsers'])->name('user.list');
+
+Route::get('admin/users/{user}/edit', [AdminController::class, 'editUsers'])->name('user.edit');
+
+Route::put('admin/users/{user}', [AdminController::class, 'updateUsers'])->name('user.update');
+
+// Rutas de Productos
+
+Route::get('admin/products', [ProductController::class, 'list'])->name('product.list');
+
+Route::get('admin/products/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
+
+Route::get('admin/products/{product}', [ProductController::class, 'showAdmin'])->name('admin.product.show');
+

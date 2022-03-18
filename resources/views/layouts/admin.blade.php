@@ -43,96 +43,101 @@
         <script src="{{asset('vendor/FlexSlider/jquery.flexslider-min.js')}}"></script>
 
   </head>
-  <body class="bg-gray-100">
-    <div class="bg-white flex p-6 shadow-sm">
-        <h6 class="flex-grow text-2xl font-bold">Tienda Ecommerce</h6>
-        <x-jet-dropdown align="right" width="48">
-            <x-slot name="trigger">
-                <button
-                    class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                    <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}"
-                        alt="{{ Auth::user()->name }}" />
-                </button>
-            </x-slot>
+  <body>
+    <div class="relative min-h-screen md:flex">
+        {{-- Menu Mobile --}}
 
-            <x-slot name="content">
-                <!-- Account Management -->
-                <div class="block px-4 py-2 text-xs text-gray-400">
-                    {{ __('Administrar Cuenta') }}
-                </div>
+        <div class="bg-gray-800 text-gray-100 flex justify-between md:hidden">
+            <a href="#" class="block p-4 text-white font-bold">Tienda Ecommerce</a>
 
-                <x-jet-dropdown-link href="{{ route('profile.show') }}">
-                    {{ __('Perfil') }}
-                </x-jet-dropdown-link>
-
-                <div class="border-t border-gray-100"></div>
-
-                <x-jet-dropdown-link href="{{ route('welcome') }}">
-                    {{ __('Tienda') }}
-                </x-jet-dropdown-link>
-
-                <div class="border-t border-gray-100"></div>
-
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-jet-dropdown-link href="{{ route('logout') }}" onclick="event.preventDefault();
-                                    this.closest('form').submit();">
-                        {{ __('Cerrar Sesion') }}
-                    </x-jet-dropdown-link>
-                </form>
-            </x-slot>
-        </x-jet-dropdown>
-    </div>
-    <div class="flex h-screen">
-        <div class="p-6 border-r w-64 hidden md:block bg-gray-400">
-            <ul>
-                <a href="">
-                    <li class="mb-8 flex">
-                        <div class="shadow-sm p-2 mr-3 rounded-lg">
-                            <i class="fas fa-door-open"></i>
-                        </div>
-                        
-                        <span class="self-center"> Inicio </span> 
-                    </li>
-                </a>
-                <a href="">
-                    <li class="mb-8 flex">
-                        <div class="shadow-sm p-2 mr-3 rounded-lg">
-                            <i class="fas fa-user"></i>
-                        </div>    
-                        <span class="self-center"> Usuarios </span> 
-                    </li>
-                </a>
-                <a href="">
-                    <li class="mb-8 flex">
-                        <div class="shadow-sm p-2 mr-3 rounded-lg">
-                            <i class="fab fa-product-hunt"></i>
-                        </div>
-                        <span class="self-center"> Productos </span> 
-                    </li>
-                </a>
-                <a href="">
-                    <li class="mb-8 flex">
-                        <div class="shadow-sm p-2 mr-3 rounded-lg">
-                            <i class="fas fa-copyright"></i>
-                        </div>
-                        <span class="self-center"> Marcas </span> 
-                    </li>
-                </a>
-                <a href="">
-                    <li class="mb-8 flex">
-                        <div class="shadow-sm p-2 mr-3 rounded-lg">
-                            <i class="fas fa-shopping-cart"></i>
-                        </div>
-                        <span class="self-center"> Pedidos </span> 
-                    </li>
-                </a>
-            </ul>
+            <button class="mobile-menu-button py-4 focus:outline-none focus:bg-gray-700">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
-        @yield('content')
+
+        {{-- Menu Web --}}
+        <div class="sidebar bg-blue-800 text-blue-100 w-64 space-y-6 px-2 py-7 absolute inset-y-0 left-0 transform -translate-x-full transition duration-200 ease-in-out md:relative md:translate-x-0">
+
+            <a href="{{route('admin.index')}}" class="text-white flex items-center space-x-2">
+                <span class="text-2xl font-extrabold">Tienda Ecommerce</span> 
+            </a>
+
+            <nav>
+                <a href="{{ route('admin.index') }}" class="block py-2.5 px-4 hover:bg-blue-700 rounded hover:text-white transition duration-200">
+                    <i class="fas fa-home"></i>
+                    <span class="ml-2">Inicio</span> 
+                </a>
+                <a href="{{ route('user.list') }}" class="block py-2.5 px-4 hover:bg-blue-700 rounded hover:text-white transition duration-200">
+                    <i class="fas fa-user"></i>
+                    <span class="ml-2">Usuarios</span>
+                </a>
+                <a href="{{ route('product.list') }}" class="block py-2.5 px-4 hover:bg-blue-700 rounded hover:text-white transition duration-200">
+                    <i class="fas fa-luggage-cart"></i>
+                    <span>Productos</span> 
+                </a>
+                <a href="#" class="block py-2.5 px-4 hover:bg-blue-700 rounded hover:text-white transition duration-200">
+                    <i class="fas fa-copyright"></i>
+                    <span>Marcas</span> 
+                </a>
+                <a href="#" class="block py-2.5 px-4 hover:bg-blue-700 rounded hover:text-white transition duration-200">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Pedidos</span> 
+                </a>
+                <x-jet-dropdown align="right" width="48">
+                    <x-slot name="trigger">
+                        <button
+                            class="ml-2 mt-2 flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                            <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}"
+                                alt="{{ Auth::user()->name }}" />
+                        </button>
+                    </x-slot>
+
+                    <x-slot name="content">
+                        <!-- Account Management -->
+                        <div class="block px-4 py-2 text-xs text-gray-400">
+                            {{ __('Administrar Cuenta') }}
+                        </div>
+
+                        <x-jet-dropdown-link href="{{ route('profile.show') }}">
+                            {{ __('Perfil') }}
+                        </x-jet-dropdown-link>
+
+                        <div class="border-t border-gray-100"></div>
+
+                        
+                        <x-jet-dropdown-link href="{{ route('welcome') }}">
+                            {{ __('Tienda') }}
+                        </x-jet-dropdown-link>
+                        
+
+                        <div class="border-t border-gray-100"></div>
+
+                        <!-- Authentication -->
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <x-jet-dropdown-link href="{{ route('logout') }}" onclick="event.preventDefault();
+                                            this.closest('form').submit();">
+                                {{ __('Cerrar Sesion') }}
+                            </x-jet-dropdown-link>
+                        </form>
+                    </x-slot>
+                </x-jet-dropdown>
+            </nav>
+        </div>
+        <div class="flex-1 m-8">
+            @yield('content')
+        </div>
+        
     </div>
+    <script>
+        const btn = document.querySelector('.mobile-menu-button');
+        const sidebar = document.querySelector('.sidebar');
+
+        btn.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+        });
+    </script>
     @livewireScripts
     @powerGridScripts
   </body>

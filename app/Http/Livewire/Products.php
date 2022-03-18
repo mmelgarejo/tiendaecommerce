@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\User;
+use App\Models\Product;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,7 +14,7 @@ use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
 use PowerComponents\LivewirePowerGrid\Rules\Rule;
 
-final class Users extends PowerGridComponent
+final class Products extends PowerGridComponent
 {
     use ActionButton;
 
@@ -33,7 +33,8 @@ final class Users extends PowerGridComponent
         $this->showCheckBox()
             ->showPerPage()
             ->showSearchInput()
-            ->showExportOption('download', ['excel', 'csv']);
+            ->showExportOption('download', ['excel', 'csv'])
+            ->showToggleColumns();
     }
 
     /*
@@ -51,7 +52,20 @@ final class Users extends PowerGridComponent
     */
     public function datasource(): ?Builder
     {
-        return User::query();
+        return Product::query()
+        ->join('brands', function($brands) {
+            $brands->on('brands.id', '=', 'products.brand_id');
+        })
+        ->select(
+            [
+                'products.id',
+                'products.name',
+                'products.description',
+                'products.price',
+                'products.quantity',
+                'brands.name as brand_name',
+            ]
+        );
     }
 
     /*
@@ -85,13 +99,10 @@ final class Users extends PowerGridComponent
         return PowerGrid::eloquent()
             ->addColumn('id')
             ->addColumn('name')
-            ->addColumn('email')
-            ->addColumn('created_at_formatted', function(User $model) { 
-                return Carbon::parse($model->created_at)->format('d/m/Y H:i:s');
-            })
-            ->addColumn('updated_at_formatted', function(User $model) { 
-                return Carbon::parse($model->updated_at)->format('d/m/Y H:i:s');
-            });
+            ->addColumn('description')
+            ->addColumn('price')
+            ->addColumn('quantity')
+            ->addColumn('brand_name');
     }
 
     /*
@@ -113,38 +124,42 @@ final class Users extends PowerGridComponent
         return [
             Column::add()
                 ->title('ID')
-                ->field('id')
-                ->makeInputRange(),
-
+                ->field('id'),
+            
             Column::add()
                 ->title('NAME')
                 ->field('name')
                 ->sortable()
                 ->searchable()
-                ->makeInputText()
-                ->editOnClick(),
+                ->makeInputText(),
 
             Column::add()
-                ->title('EMAIL')
-                ->field('email')
+                ->title('DESCRIPTION')
+                ->field('description')
                 ->sortable()
                 ->searchable()
-                ->makeInputText()
-                ->editOnClick(),
+                ->makeInputText(),
 
             Column::add()
-                ->title('CREATED AT')
-                ->field('created_at_formatted', 'created_at')
-                ->searchable()
+                ->title('PRICE')
+                ->field('price')
                 ->sortable()
-                ->makeInputDatePicker('created_at'),
+                ->searchable()
+                ->makeInputRange(),
 
             Column::add()
-                ->title('UPDATED AT')
-                ->field('updated_at_formatted', 'updated_at')
-                ->searchable()
+                ->title('QUANTITY')
+                ->field('quantity')
                 ->sortable()
-                ->makeInputDatePicker('updated_at'),
+                ->searchable()
+                ->makeInputRange(),
+
+            Column::add()
+                ->title('BRAND_NAME')
+                ->field('brand_name', 'brands.name')
+                ->sortable()
+                ->searchable()
+                ->makeInputText(),
 
         ]
 ;
@@ -159,7 +174,7 @@ final class Users extends PowerGridComponent
     */
 
      /**
-     * PowerGrid User Action Buttons.
+     * PowerGrid Product Action Buttons.
      *
      * @return array<int, \PowerComponents\LivewirePowerGrid\Button>
      */
@@ -169,15 +184,20 @@ final class Users extends PowerGridComponent
     {
        return [
            Button::add('edit')
-               ->caption('Edit')
-               ->class('bg-blue-800 cursor-pointer text-white p-2 m-1 rounded text-sm hover:bg-blue-700')
-               ->route('user.edit', ['user' => 'id']),
+               ->caption('<i class="fas fa-pen"></i>')
+               ->class('bg-blue-800 cursor-pointer text-white p-2 rounded text-sm hover:bg-blue-700')
+               ->route('product.edit', ['product' => 'id']),
 
         //    Button::add('destroy')
         //        ->caption('Delete')
         //        ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-        //        ->route('user.destroy', ['user' => 'id'])
+        //        ->route('product.destroy', ['product' => 'id'])
         //        ->method('delete')
+
+        Button::add('show')
+               ->caption('<i class="fas fa-eye"></i>')
+               ->class('bg-blue-800 cursor-pointer text-white p-2 mr-1 rounded text-sm hover:bg-blue-700')
+               ->route('admin.product.show', ['product' => 'id']),
         ];
     }
     
@@ -191,7 +211,7 @@ final class Users extends PowerGridComponent
     */
 
      /**
-     * PowerGrid User Action Rules.
+     * PowerGrid Product Action Rules.
      *
      * @return array<int, \PowerComponents\LivewirePowerGrid\Rules\RuleActions>
      */
@@ -203,7 +223,7 @@ final class Users extends PowerGridComponent
            
            //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($user) => $user->id === 1)
+                ->when(fn($product) => $product->id === 1)
                 ->hide(),
         ];
     }
@@ -219,16 +239,16 @@ final class Users extends PowerGridComponent
     */
 
      /**
-     * PowerGrid User Update.
+     * PowerGrid Product Update.
      *
      * @param array<string,string> $data
      */
 
-    
+    /*
     public function update(array $data ): bool
     {
        try {
-           $updated = User::query()->findOrFail($data['id'])
+           $updated = Product::query()->findOrFail($data['id'])
                 ->update([
                     $data['field'] => $data['value'],
                 ]);
@@ -242,11 +262,11 @@ final class Users extends PowerGridComponent
     {
         $updateMessages = [
             'success'   => [
-                '_default_message' => __('Datos actualizados correctamente!'),
+                '_default_message' => __('Data has been updated successfully!'),
                 //'custom_field'   => __('Custom Field updated successfully!'),
             ],
             'error' => [
-                '_default_message' => __('Hubo un error al intentar actualizar!'),
+                '_default_message' => __('Error updating the data.'),
                 //'custom_field'   => __('Error updating custom field.'),
             ]
         ];
@@ -255,5 +275,5 @@ final class Users extends PowerGridComponent
 
         return (is_string($message)) ? $message : 'Error!';
     }
-    
+    */
 }

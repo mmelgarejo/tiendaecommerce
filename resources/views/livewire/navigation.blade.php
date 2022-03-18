@@ -42,9 +42,11 @@
 
                         <div class="border-t border-gray-100"></div>
 
-                        <x-jet-dropdown-link href="{{ route('admin.index') }}">
-                            {{ __('Administrador') }}
-                        </x-jet-dropdown-link>
+                        @can('admin.home')
+                            <x-jet-dropdown-link href="{{ route('admin.index') }}">
+                                {{ __('Administrador') }}
+                            </x-jet-dropdown-link>
+                        @endcan
 
                         <div class="border-t border-gray-100"></div>
 
