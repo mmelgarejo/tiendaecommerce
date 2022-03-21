@@ -4,7 +4,7 @@
         <span class="font-semibold text-lg">Stock Disponible: </span> {{$quantity}}
     </p>
     <div class="flex"> 
-        <div>
+        <div class="mr-4">
             <x-jet-secondary-button 
             disabled
             x-bind:disabled="$wire.qty <= 1"
@@ -23,9 +23,13 @@
             </x-jet-secondary-button>
         </div>
         <div class="flex-1">
-            <x-jet-button class="w-full">
+            <x-button-add color="gray"
+                class="w-full"
+                wire:click="addItem"
+                wire:loading.attr="disabled"
+                wire:target="addItem">
                 Agregar producto al carrito
-            </x-jet-button>
+            </x-button-add>
         </div>
     </div>
 </div>

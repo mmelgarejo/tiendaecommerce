@@ -59,7 +59,7 @@ final class Products extends PowerGridComponent
         ->select(
             [
                 'products.id',
-                'products.name',
+                'products.name as product_name',
                 'products.description',
                 'products.price',
                 'products.quantity',
@@ -98,7 +98,7 @@ final class Products extends PowerGridComponent
     {
         return PowerGrid::eloquent()
             ->addColumn('id')
-            ->addColumn('name')
+            ->addColumn('product_name')
             ->addColumn('description')
             ->addColumn('price')
             ->addColumn('quantity')
@@ -128,7 +128,7 @@ final class Products extends PowerGridComponent
             
             Column::add()
                 ->title('NAME')
-                ->field('name')
+                ->field('product_name', 'products.name')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),

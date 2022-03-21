@@ -27,7 +27,7 @@ Route::get('categories/{category}', [CategoryController::class, 'show'])->name('
 
 Route::get('products/{product}', [ProductController::class, 'show'])->name('product.show');
 
-Route::get('admin', [AdminController::class, 'index'])->middleware('can:admin.home')->name('admin.index');
+Route::get('admin', [AdminController::class, 'index'])->middleware('can:admin.index')->name('admin.index');
 
 // Rutas de Users
 
@@ -44,4 +44,8 @@ Route::get('admin/products', [ProductController::class, 'list'])->name('product.
 Route::get('admin/products/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
 
 Route::get('admin/products/{product}', [ProductController::class, 'showAdmin'])->name('admin.product.show');
+
+// Route::get('/prueba', function() {
+//     \Cart::destroy();
+// });
 
