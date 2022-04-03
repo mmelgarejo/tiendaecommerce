@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 class AddCartItem extends Component
 {
+    protected $listeners = ['mount'];
     public $product;
     public $quantity; 
     public $qty = 1;
@@ -18,7 +19,7 @@ class AddCartItem extends Component
     ];
 
     public function mount() {
-        $this->quantity = $this->product->quantity;
+        $this->quantity = qty_available($this->product->id);
         $this->options['image'] = Storage::url($this->product->images->first()->url);
     }
 
@@ -38,6 +39,10 @@ class AddCartItem extends Component
                     'weight' => 550,
                     'options' => $this->options
                 ]);
+
+        $this->quantity = qty_available($this->product->id);
+
+        $this->reset('qty');
 
         $this->emitTo('dropdown-cart', 'render');
     }

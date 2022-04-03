@@ -196,8 +196,13 @@ final class Products extends PowerGridComponent
 
         Button::add('show')
                ->caption('<i class="fas fa-eye"></i>')
-               ->class('bg-blue-800 cursor-pointer text-white p-2 mr-1 rounded text-sm hover:bg-blue-700')
+               ->class('bg-blue-800 cursor-pointer text-white p-2 rounded text-sm hover:bg-blue-700')
                ->route('admin.product.show', ['product' => 'id']),
+
+        Button::add('destroy')
+               ->caption('<i class="far fa-trash-alt"></i>')
+               ->class('bg-red-500 cursor-pointer text-white p-2 rounded text-sm hover:bg-red-600')
+               ->openModal('destroy-product', ['product' => 'id'])
         ];
     }
     

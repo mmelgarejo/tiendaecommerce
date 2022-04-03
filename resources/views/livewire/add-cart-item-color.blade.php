@@ -7,9 +7,14 @@
             <option value="{{$color->id}}">{{$color->name}}</option>
         @endforeach
     </select>
-    @if ($quantity > 0)
-        <p class="text-gray-700 mt-4">
-            <span class="font-semibold text-lg">Stock Disponible: </span> {{$quantity}}
+    @if ($quantity > 0) 
+        <div class="flex mt-4 items-center">
+            <p class="text-white text-sm uppercase bg-green-500 rounded p-2">Disponible</p>
+            <p class="text-gray-700 text-sm ml-2">Stock: {{$product->stock}}</p>
+        </div>
+    @else
+        <p class="text-white mt-4">
+            <span class="text-center text-sm uppercase bg-red-500 rounded p-2">No Disponible</span>
         </p>
     @endif
     <div class="flex mt-4"> 

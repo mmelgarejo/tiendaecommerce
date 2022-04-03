@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class AddCartItemSize extends Component
 {
+    protected $listeners = ['render'];
     public $product, $sizes;
 
     public $color_id = '';
@@ -49,6 +50,10 @@ class AddCartItemSize extends Component
                     'options' => $this->options
                 ]);
 
+        $this->quantity = qty_available($this->product->id, $this->color_id, $this->size_id);
+
+        $this->reset('qty');
+
         $this->emitTo('dropdown-cart', 'render');
     }
 
@@ -66,7 +71,7 @@ class AddCartItemSize extends Component
     public function updatedColorId($value) {
         $size = Size::find($this->size_id);
         $color = $size->colors->find($value);
-        $this->quantity = $color->pivot->quantity;
+        $this->quantity = qty_available($this->product->id, $color->id, $size->id);
         $this->options['color'] = $color->name;
     }
 }

@@ -136,9 +136,12 @@
 
         btn.addEventListener('click', () => {
             sidebar.classList.toggle('-translate-x-full');
-        });
+        });   
+
     </script>
+    @yield('script')
     @livewireScripts
+    @livewire('livewire-ui-modal')
     @powerGridScripts
   </body>
 </html>

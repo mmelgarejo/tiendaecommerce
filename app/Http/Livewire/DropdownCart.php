@@ -12,6 +12,10 @@ class DropdownCart extends Component
 
     public function destroyCart() {
         Cart::destroy();
+
+        $this->emitTo('add-cart-item', 'mount');
+        $this->emitTo('add-cart-item-color', 'mount');
+        $this->emitTo('add-cart-item-size', 'mount');
     }
 
     public function render()

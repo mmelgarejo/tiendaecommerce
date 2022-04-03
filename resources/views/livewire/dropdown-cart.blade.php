@@ -53,7 +53,7 @@
 
                 <x-button-enlace 
                     wire:click="destroyCart"
-                    color="red" class="w-full mt-3">
+                    class="w-full mt-3">
                     Vaciar Carrito
                 </x-button-enlace>    
                

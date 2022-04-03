@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,7 +46,5 @@ Route::get('admin/products/{product}/edit', [ProductController::class, 'edit'])-
 
 Route::get('admin/products/{product}', [ProductController::class, 'showAdmin'])->name('admin.product.show');
 
-// Route::get('/prueba', function() {
-//     \Cart::destroy();
-// });
-
+// Rutas Search
+Route::get('search', SearchController::class)->name('search');
