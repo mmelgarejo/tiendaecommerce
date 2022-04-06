@@ -29,9 +29,14 @@
                                     <p>- Talla: {{$item->options['size']}}</p>
                                 @endisset
                             </div>
-                            
                             <p>Gs. {{$item->price}}</p>
                         </article>
+                        <a class="ml-6 cursor-pointer hover:text-red-600"
+                            wire:click="destroyItem('{{$item->rowId}}')"
+                            wire:loading.class="text-red-600 opacity-25"
+                            wire:target="destroyItem('{{$item->rowId}}')"> 
+                            <i class="fas fa-trash"></i>  
+                        </a>
                     </li>
                 @empty
                     <li class="py-6 px-4">
@@ -46,11 +51,12 @@
                 <div class="py-2 px-3">
                     <p class="text-lg text-gray-700 mt-2 mb-3"><span class="font-bold">Total:</span> GS. {{Cart::subtotal()}}</p>
                 </div>
-
-                <x-button-enlace color="gray" class="w-full">
-                    Ir al carrito de compras
-                </x-button-enlace>    
-
+            
+                <a href="{{ route('shopping-cart') }}">
+                    <x-button-enlace color="gray" class="w-full">
+                        Ir al carrito de compras
+                    </x-button-enlace>    
+                </a>
                 <x-button-enlace 
                     wire:click="destroyCart"
                     class="w-full mt-3">

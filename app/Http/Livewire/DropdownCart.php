@@ -18,6 +18,14 @@ class DropdownCart extends Component
         $this->emitTo('add-cart-item-size', 'mount');
     }
 
+    public function destroyItem($rowId) {
+        Cart::remove($rowId);
+
+        $this->emitTo('add-cart-item', 'mount');
+        $this->emitTo('add-cart-item-color', 'mount');
+        $this->emitTo('add-cart-item-size', 'mount');
+    }
+
     public function render()
     {
         return view('livewire.dropdown-cart');

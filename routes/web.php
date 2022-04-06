@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\ShoppingCart;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
+// Ruta de Productos
+
 Route::get('categories/{category}', [CategoryController::class, 'show'])->name('category.show');
 
 Route::get('products/{product}', [ProductController::class, 'show'])->name('product.show');
@@ -38,7 +41,7 @@ Route::get('admin/users/{user}/edit', [AdminController::class, 'editUsers'])->na
 
 Route::put('admin/users/{user}', [AdminController::class, 'updateUsers'])->name('user.update');
 
-// Rutas de Productos
+// Rutas de Admin Productos
 
 Route::get('admin/products', [ProductController::class, 'list'])->name('product.list');
 
@@ -48,3 +51,7 @@ Route::get('admin/products/{product}', [ProductController::class, 'showAdmin'])-
 
 // Rutas Search
 Route::get('search', SearchController::class)->name('search');
+
+// Rutas de shopping cart
+
+Route::get('shopping-cart', ShoppingCart::class)->name('shopping-cart');
