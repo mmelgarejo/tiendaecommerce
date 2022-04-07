@@ -1174,6 +1174,9 @@ select {
 .mb-1 {
   margin-bottom: 0.25rem;
 }
+.mt-auto {
+  margin-top: auto;
+}
 .-mt-px {
   margin-top: -1px;
 }
@@ -1311,6 +1314,9 @@ select {
 }
 .w-96 {
   width: 24rem;
+}
+.w-56 {
+  width: 14rem;
 }
 .w-64 {
   width: 16rem;
@@ -1572,6 +1578,9 @@ select {
 .truncate {
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.whitespace-nowrap {
   white-space: nowrap;
 }
 .rounded-md {
@@ -2247,6 +2256,9 @@ select {
 }
 .opacity-40 {
   opacity: 0.4;
+}
+.opacity-25 {
+  opacity: 0.25;
 }
 .shadow-sm {
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
